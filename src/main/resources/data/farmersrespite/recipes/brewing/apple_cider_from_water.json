@@ -1,0 +1,32 @@
+{
+  "type": "forge:conditional",
+  "recipes": [
+    {
+      "conditions": [
+        {
+          "type": "forge:mod_loaded",
+          "modid": "orchardistsdream"
+        }
+      ],
+      "type": "farmersrespite:brewing",
+      "base": {
+        "count": 1000,
+        "fluid": "minecraft:water"
+      },
+      "cookingtime": 2400,
+      "experience": 0.35,
+      "ingredients": [
+        {
+          "item": "minecraft:apple"
+        },
+        {
+          "item": "minecraft:sugar"
+        }
+      ],
+      "result": {
+        "count": 1000,
+        "fluid": "farmersrespite:apple_cider"
+      }
+    }
+  ]
+}

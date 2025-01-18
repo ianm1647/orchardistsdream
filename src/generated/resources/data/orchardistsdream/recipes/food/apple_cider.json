@@ -1,0 +1,32 @@
+{
+  "type": "forge:conditional",
+  "recipes": [
+    {
+      "conditions": [
+        {
+          "type": "orchardistsdream:enabled",
+          "value": "apple_cider"
+        }
+      ],
+      "recipe": {
+        "type": "orchardistsdream:juicing",
+        "container": {
+          "item": "minecraft:glass_bottle"
+        },
+        "experience": 1.0,
+        "ingredients": [
+          {
+            "item": "minecraft:apple"
+          },
+          {
+            "item": "minecraft:sugar"
+          }
+        ],
+        "juicingtime": 200,
+        "result": {
+          "item": "farmersdelight:apple_cider"
+        }
+      }
+    }
+  ]
+}

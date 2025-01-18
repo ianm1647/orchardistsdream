@@ -21,6 +21,12 @@ public class RecipeCategories {
             () -> RecipeBookCategories.create("JUICING_DRINKS", new ItemStack(Items.HONEY_BOTTLE)));
     public static final Supplier<RecipeBookCategories> JUICING_MISC = Suppliers.memoize(
             () -> RecipeBookCategories.create("JUICING_MISC", new ItemStack(Items.APPLE)));
+    public static final Supplier<RecipeBookCategories> CHILLING_SEARCH = Suppliers.memoize(
+            () -> RecipeBookCategories.create("CHILLING_SEARCH", new ItemStack(Items.COMPASS)));
+    public static final Supplier<RecipeBookCategories> CHILLING_DRINKS = Suppliers.memoize(
+            () -> RecipeBookCategories.create("CHILLING_DRINKS", new ItemStack(Items.HONEY_BOTTLE)));
+    public static final Supplier<RecipeBookCategories> CHILLING_MISC = Suppliers.memoize(
+            () -> RecipeBookCategories.create("CHILLING_MISC", new ItemStack(Items.APPLE)));
 
     public RecipeCategories() {
     }
@@ -44,6 +50,25 @@ public class RecipeCategories {
             }
 
             return JUICING_MISC.get();
+        });
+        event.registerBookCategories(OrchardistsDream.RECIPE_TYPE_CHILLING, ImmutableList.of(CHILLING_SEARCH.get(), CHILLING_DRINKS.get(), CHILLING_MISC.get()));
+        event.registerAggregateCategory(CHILLING_SEARCH.get(), ImmutableList.of(CHILLING_DRINKS.get(), CHILLING_MISC.get()));
+        event.registerRecipeCategoryFinder(ODRecipeTypes.CHILLING.get(), (recipe) -> {
+            if (recipe instanceof JuicerRecipe juicerRecipe) {
+                JuicerRecipeBookTab tab = juicerRecipe.getRecipeBookTab();
+                if (tab != null) {
+                    RecipeBookCategories var10000;
+                    switch (tab) {
+                        case DRINKS -> var10000 = CHILLING_DRINKS.get();
+                        case MISC -> var10000 = CHILLING_MISC.get();
+                        default -> throw new IncompatibleClassChangeError();
+                    }
+
+                    return var10000;
+                }
+            }
+
+            return CHILLING_MISC.get();
         });
     }
 }

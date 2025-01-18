@@ -16,6 +16,7 @@ public class ODConfig {
     private static final Map<String, ForgeConfigSpec.BooleanValue> ITEMS = new HashMap<>();
     public static final String CATEGORY_RECIPE_BOOK = "recipe_book";
     public static ForgeConfigSpec.BooleanValue ENABLE_RECIPE_BOOK_JUICER;
+    public static ForgeConfigSpec.BooleanValue ENABLE_RECIPE_BOOK_CHILLED_COOKING_POT;
 
     public ODConfig() {
     }
@@ -36,6 +37,7 @@ public class ODConfig {
         ForgeConfigSpec.Builder COMMON_BUILDER = new ForgeConfigSpec.Builder();
         COMMON_BUILDER.comment("Recipe book").push("recipe_book");
         ENABLE_RECIPE_BOOK_JUICER = COMMON_BUILDER.comment("Should the Juicer have a Recipe Book available on its interface?").define("enableRecipeBookJuicer", true);
+        ENABLE_RECIPE_BOOK_CHILLED_COOKING_POT = COMMON_BUILDER.comment("Should the Chilled Cooking Pot have a Recipe Book available on its interface?").define("enableRecipeBookChilledCookingPot", true);
         COMMON_BUILDER.pop();
         COMMON_CONFIG = COMMON_BUILDER.build();
     }

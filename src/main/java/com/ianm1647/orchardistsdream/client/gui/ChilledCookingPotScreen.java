@@ -1,5 +1,6 @@
 package com.ianm1647.orchardistsdream.client.gui;
 
+import com.ianm1647.orchardistsdream.common.ODConfig;
 import com.ianm1647.orchardistsdream.common.block.entity.container.ChilledCookingPotMenu;
 import com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.ChatFormatting;
@@ -15,6 +16,7 @@ import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.inventory.ClickType;
 import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
+import vectorwing.farmersdelight.common.Configuration;
 
 import javax.annotation.Nonnull;
 import javax.annotation.ParametersAreNonnullByDefault;
@@ -31,21 +33,25 @@ public class ChilledCookingPotScreen extends AbstractContainerScreen<ChilledCook
     private final ChilledCookingPotRecipeBookComponent recipeBookComponent = new ChilledCookingPotRecipeBookComponent();
     private boolean widthTooNarrow;
 
-    public ChilledCookingPotScreen(ChilledCookingPotMenu screenContainer, Inventory inv, net.minecraft.network.chat.Component titleIn) {
+    public ChilledCookingPotScreen(ChilledCookingPotMenu screenContainer, Inventory inv, Component titleIn) {
         super(screenContainer, inv, titleIn);
     }
-
     public void init() {
         super.init();
         this.widthTooNarrow = this.width < 379;
         this.titleLabelX = 28;
         this.recipeBookComponent.init(this.width, this.height, this.minecraft, this.widthTooNarrow, this.menu);
         this.leftPos = this.recipeBookComponent.updateScreenPosition(this.width, this.imageWidth);
-        this.addRenderableWidget(new ImageButton(this.leftPos + 5, this.height / 2 - 49, 20, 18, 0, 0, 19, RECIPE_BUTTON_LOCATION, (button) -> {
-            this.recipeBookComponent.toggleVisibility();
+        if (ODConfig.ENABLE_RECIPE_BOOK_CHILLED_COOKING_POT.get()) {
+            this.addRenderableWidget(new ImageButton(this.leftPos + 5, this.height / 2 - 49, 20, 18, 0, 0, 19, RECIPE_BUTTON_LOCATION, (button) -> {
+                this.recipeBookComponent.toggleVisibility();
+                this.leftPos = this.recipeBookComponent.updateScreenPosition(this.width, this.imageWidth);
+                (button).setPosition(this.leftPos + 5, this.height / 2 - 49);
+            }));
+        } else {
+            this.recipeBookComponent.hide();
             this.leftPos = this.recipeBookComponent.updateScreenPosition(this.width, this.imageWidth);
-            (button).setPosition(this.leftPos + 5, this.height / 2 - 49);
-        }));
+        }
 
         this.addWidget(this.recipeBookComponent);
         this.setInitialFocus(this.recipeBookComponent);
@@ -74,7 +80,7 @@ public class ChilledCookingPotScreen extends AbstractContainerScreen<ChilledCook
 
     private void renderHeatIndicatorTooltip(GuiGraphics gui, int mouseX, int mouseY) {
         if (this.isHovering(HEAT_ICON.x, HEAT_ICON.y, HEAT_ICON.width, HEAT_ICON.height, (double)mouseX, (double)mouseY)) {
-            String key = "container.chilled_cooking_pot." + (this.menu.isChilled() ? "chilled" : "not_chilled");
+            String key = "container.chilled_cooking_pot." + ((this.menu).isChilled() ? "chilled" : "not_chilled");
             gui.renderTooltip(this.font, Component.translatable(key, this.menu), mouseX, mouseY);
         }
 

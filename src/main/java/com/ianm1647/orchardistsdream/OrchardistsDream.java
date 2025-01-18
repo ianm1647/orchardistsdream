@@ -39,6 +39,7 @@ public class OrchardistsDream
         ODRecipeTypes.RECIPE_TYPES.register(modEventBus);
         ODRecipeSerializers.RECIPE_SERIALIZERS.register(modEventBus);
         ODTabs.CREATIVE_TABS.register(modEventBus);
+
         MinecraftForge.EVENT_BUS.register(this);
     }
 }

@@ -1,5 +1,6 @@
 package com.ianm1647.orchardistsdream.common.event;
 
+import com.google.common.eventbus.Subscribe;
 import com.ianm1647.orchardistsdream.OrchardistsDream;
 import com.ianm1647.orchardistsdream.common.registry.ODBlocks;
 import com.ianm1647.orchardistsdream.common.tag.ODTags;
@@ -11,10 +12,14 @@ import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
+import net.minecraftforge.event.level.BlockEvent;
+import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
+import vectorwing.farmersdelight.common.registry.ModBlocks;
 import vectorwing.farmersdelight.common.registry.ModItems;
 
 @Mod.EventBusSubscriber(modid = OrchardistsDream.MODID)
@@ -32,6 +37,9 @@ public class ClickCookingPotEvent {
             BlockState block = ODBlocks.CHILLED_COOKING_POT.get().defaultBlockState();
             Direction face = event.getFace();
             if (face == Direction.UP) {
+                if (!player.isCreative()) {
+                    stack.shrink(1);
+                }
                 level.setBlock(pos.above(), block, 3);
                 level.playSound(player, pos, SoundEvents.LANTERN_PLACE, SoundSource.BLOCKS, 1.0f, 1.0f);
                 player.swing(player.getUsedItemHand());

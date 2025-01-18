@@ -4,7 +4,9 @@ import com.ianm1647.orchardistsdream.OrchardistsDream;
 import com.ianm1647.orchardistsdream.common.block.ChilledCookingPotBlock;
 import com.ianm1647.orchardistsdream.common.block.JuicerBlock;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.state.BlockBehaviour;
+import net.minecraft.world.level.material.MapColor;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
@@ -22,7 +24,8 @@ public class ODBlocks {
 
         JUICER = BLOCKS.register("juicer", JuicerBlock::new);
 
-        CHILLED_COOKING_POT = BLOCKS.register("chilled_cooking_pot", () -> new ChilledCookingPotBlock(BlockBehaviour.Properties.of()));
+        CHILLED_COOKING_POT = BLOCKS.register("chilled_cooking_pot",
+                () -> new ChilledCookingPotBlock(BlockBehaviour.Properties.of().mapColor(MapColor.METAL).strength(0.5F, 6.0F).sound(SoundType.LANTERN)));
     }
 
 }

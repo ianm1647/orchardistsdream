@@ -1,7 +1,10 @@
 package com.ianm1647.orchardistsdream.client.gui;
 
+import com.ianm1647.orchardistsdream.OrchardistsDream;
 import com.ianm1647.orchardistsdream.common.crafting.ChillingRecipe;
 import net.minecraft.client.gui.screens.recipebook.RecipeBookComponent;
+import net.minecraft.core.NonNullList;
+import net.minecraft.core.RegistryAccess;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.inventory.Slot;
@@ -13,10 +16,7 @@ import javax.annotation.Nonnull;
 import java.util.List;
 
 public class ChilledCookingPotRecipeBookComponent extends RecipeBookComponent {
-    protected static final ResourceLocation RECIPE_BOOK_BUTTONS = new ResourceLocation("farmersdelight", "textures/gui/recipe_book_buttons.png");
-
-    public ChilledCookingPotRecipeBookComponent() {
-    }
+    protected static final ResourceLocation RECIPE_BOOK_BUTTONS = new ResourceLocation(OrchardistsDream.MODID, "textures/gui/recipe_book_buttons.png");
 
     protected void initFilterButtonTextures() {
         this.filterButton.initTextureValues(0, 0, 28, 18, RECIPE_BOOK_BUTTONS);
@@ -32,7 +32,9 @@ public class ChilledCookingPotRecipeBookComponent extends RecipeBookComponent {
     }
 
     public void setupGhostRecipe(Recipe<?> recipe, List<Slot> slots) {
-        ItemStack resultStack = recipe.getResultItem(this.minecraft.level.registryAccess());
+        NonNullList<Ingredient> ingredientsList = NonNullList.create();
+        ingredientsList.addAll(recipe.getIngredients());
+        ItemStack resultStack = recipe.getResultItem(RegistryAccess.EMPTY);
         this.ghostRecipe.setRecipe(recipe);
         if (slots.get(6).getItem().isEmpty()) {
             this.ghostRecipe.addIngredient(Ingredient.of(resultStack), slots.get(6).x, slots.get(6).y);
@@ -45,6 +47,6 @@ public class ChilledCookingPotRecipeBookComponent extends RecipeBookComponent {
             }
         }
 
-        this.placeRecipe(this.menu.getGridWidth(), this.menu.getGridHeight(), this.menu.getResultSlotIndex(), recipe, recipe.getIngredients().iterator(), 0);
+        this.placeRecipe(this.menu.getGridWidth(), this.menu.getGridHeight(), this.menu.getResultSlotIndex(), recipe, ingredientsList.iterator(), 0);
     }
 }

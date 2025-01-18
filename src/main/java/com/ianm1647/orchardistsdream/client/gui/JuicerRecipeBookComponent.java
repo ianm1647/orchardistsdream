@@ -36,14 +36,14 @@ public class JuicerRecipeBookComponent extends RecipeBookComponent {
         ingredientsList.addAll(recipe.getIngredients());
         ItemStack resultStack = recipe.getResultItem(RegistryAccess.EMPTY);
         this.ghostRecipe.setRecipe(recipe);
-        if (((Slot)slots.get(2)).getItem().isEmpty()) {
-            this.ghostRecipe.addIngredient(Ingredient.of(resultStack), ((Slot)slots.get(2)).x, ((Slot)slots.get(2)).y);
+        if (slots.get(2).getItem().isEmpty()) {
+            this.ghostRecipe.addIngredient(Ingredient.of(resultStack), slots.get(2).x, slots.get(2).y);
         }
 
         if (recipe instanceof JuicerRecipe juicerRecipe) {
             ItemStack containerStack = juicerRecipe.getOutputContainer();
             if (!containerStack.isEmpty()) {
-                this.ghostRecipe.addIngredient(Ingredient.of(containerStack), ((Slot)slots.get(3)).x, ((Slot)slots.get(3)).y);
+                this.ghostRecipe.addIngredient(Ingredient.of(containerStack), slots.get(3).x, slots.get(3).y);
             }
         }
 

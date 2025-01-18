@@ -57,7 +57,7 @@ public class ChilledCookingPotMenu extends RecipeBookMenu<RecipeWrapper> {
         this.addSlot(new CookingPotMealSlot(this.inventory, 6, 124, 26));
         this.addSlot(new SlotItemHandler(this.inventory, 7, 92, 55) {
             public Pair<ResourceLocation, ResourceLocation> getNoItemIcon() {
-                return Pair.of(InventoryMenu.BLOCK_ATLAS, vectorwing.farmersdelight.common.block.entity.container.CookingPotMenu.EMPTY_CONTAINER_SLOT_BOWL);
+                return Pair.of(InventoryMenu.BLOCK_ATLAS, ChilledCookingPotMenu.EMPTY_CONTAINER_SLOT_BOWL);
             }
         });
         this.addSlot(new ChilledCookingPotResultSlot(playerInventory.player, blockEntity, this.inventory, 8, 124, 55));
